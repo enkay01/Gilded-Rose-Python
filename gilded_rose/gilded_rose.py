@@ -19,17 +19,14 @@ class GildedRose(object):
                     self.increment_quality(item)
                     if item.name == BACKSTAGE_PASS_STRING:
                         if item.sell_in < 11:
-                            if item.quality < self.MAX_QUALITY:
-                                self.increment_quality(item)
+                            self.increment_quality(item)
                         if item.sell_in < 6:
-                            if item.quality < self.MAX_QUALITY:
-                                self.increment_quality(item)
+                            self.increment_quality(item)
             if item.name != SULFURAS_STRING:
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
                 if item.name == AGED_BRIE_STRING:
-                    if item.quality < self.MAX_QUALITY:
-                        self.increment_quality(item)
+                    self.increment_quality(item)
                 else:
                     if item.name != BACKSTAGE_PASS_STRING:
                         if item.quality > 0:
@@ -42,8 +39,9 @@ class GildedRose(object):
         item.quality -= 1
 
     def increment_quality(self, item):
-        item.quality += 1
-        if item.quality > self.MAX_QUALITY:
-            item.quality = self.MAX_QUALITY
+        item.quality = self.MAX_QUALITY if item.quality + 1 > self.MAX_QUALITY else item.quality + 1
+        # item.quality += 1
+        # if item.quality > self.MAX_QUALITY:
+        #     item.quality = self.MAX_QUALITY
 
     
