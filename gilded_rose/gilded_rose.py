@@ -10,11 +10,7 @@ class GildedRose(object):
         AGED_BRIE_STRING = "Aged Brie"
         
         for item in self.items:
-            if item.name != AGED_BRIE_STRING and item.name != BACKSTAGE_PASS_STRING:
-                if item.quality > 0:
-                    if item.name != SULFURAS_STRING:
-                        self.decrement_quality(item)
-            else:
+            if item.name == AGED_BRIE_STRING or item.name == BACKSTAGE_PASS_STRING:
                 if item.quality < self.MAX_QUALITY:
                     self.increment_quality(item)
                     if item.name == BACKSTAGE_PASS_STRING:
@@ -22,8 +18,13 @@ class GildedRose(object):
                             self.increment_quality(item)
                         if item.sell_in < 6:
                             self.increment_quality(item)
-            if item.name != SULFURAS_STRING:
-                item.sell_in = item.sell_in - 1
+            else:
+                if item.quality > 0 and item.name != SULFURAS_STRING:
+                    self.decrement_quality(item)
+                    #if item.name != SULFURAS_STRING:
+                     #   self.decrement_quality(item)
+            
+            item.sell_in = item.sell_in - 1 if item.name != SULFURAS_STRING else item.sell_in
             if item.sell_in < 0:
                 if item.name == AGED_BRIE_STRING:
                     self.increment_quality(item)
@@ -40,8 +41,5 @@ class GildedRose(object):
 
     def increment_quality(self, item):
         item.quality = self.MAX_QUALITY if item.quality + 1 > self.MAX_QUALITY else item.quality + 1
-        # item.quality += 1
-        # if item.quality > self.MAX_QUALITY:
-        #     item.quality = self.MAX_QUALITY
 
     
