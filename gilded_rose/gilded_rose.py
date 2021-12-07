@@ -12,27 +12,35 @@ class GildedRose(object):
             if item.name != AGED_BRIE_STRING and item.name != BACKSTAGE_PASS_STRING:
                 if item.quality > 0:
                     if item.name != SULFURAS_STRING:
-                        item.quality = item.quality - 1
+                        self.decrement_quality(item)
             else:
                 if item.quality < MAX_QUALITY:
-                    item.quality = item.quality + 1
+                    self.increment_quality(item)
                     if item.name == BACKSTAGE_PASS_STRING:
                         if item.sell_in < 11:
                             if item.quality < MAX_QUALITY:
-                                item.quality = item.quality + 1
+                                self.increment_quality(item)
                         if item.sell_in < 6:
                             if item.quality < MAX_QUALITY:
-                                item.quality = item.quality + 1
+                                self.increment_quality(item)
             if item.name != SULFURAS_STRING:
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
                 if item.name == AGED_BRIE_STRING:
                     if item.quality < MAX_QUALITY:
-                        item.quality = item.quality + 1
+                        self.increment_quality(item)
                 else:
                     if item.name != BACKSTAGE_PASS_STRING:
                         if item.quality > 0:
                             if item.name != SULFURAS_STRING:
-                                item.quality = item.quality - 1
+                                self.decrement_quality(item)
                     else:
-                        item.quality = item.quality - item.quality
+                        item.quality = 0
+
+    def decrement_quality(self, item):
+        item.quality -= 1
+
+    def increment_quality(self, item):
+        item.quality += 1
+
+    
